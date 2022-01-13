@@ -22,7 +22,7 @@ class Point:
     def __add__(self, other):
         if self.x == other.x and (self.y+other.y) % self.p==0:
             return self.__class__(0, 0, self.a, self.b, self.p)
-        if self.x==0 and self.y==0:
+        if self.x == 0 and self.y == 0:
             return other
         if self.x != other.x or self.y != other.y:
             k = self.modAll((self.y - other.y),(self.x - other.x),self.p)
