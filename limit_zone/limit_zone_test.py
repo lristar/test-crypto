@@ -46,7 +46,7 @@ class FieldElement:
 
 ## init v
     def __truediv__(self, other):
-        return  self.num*(other.num**(self.prime-2))%self.prime
+        return self.num*(other.num**(self.prime-2))%self.prime
     def jugdePrime(self,other):
         if other.prime != self.prime:
             error = 'prime is no equal'
@@ -60,6 +60,7 @@ def main():
     print(a+b)
     print(a*b)
     print(a**-3 == b)
+    print((29*(12**95))%97)
 
 
 if __name__ == '__main__':
