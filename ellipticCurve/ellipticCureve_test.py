@@ -1,6 +1,3 @@
-import time
-
-
 class EllipticCurve:
     def __init__(self, a, b, p):
         self.a = a
