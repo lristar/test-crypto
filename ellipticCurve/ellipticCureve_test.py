@@ -41,8 +41,7 @@ class Point:
     def modAll(self, x, y, m):
         if x % y != 0:
             return x % m * self.quickM(y, m - 2, m)
-        else:
-            return (x / y) % m
+        return (x / y) % m
 
     @staticmethod
     def quickM(a, b, m):
