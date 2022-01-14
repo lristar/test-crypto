@@ -54,14 +54,6 @@ class Point:
             a = (a * a) % m
         return ans
 
-        # for b.Int64() != 0 {
-        # if b.Int64() & 1 == 1 {
-        # res.Mul(res, a).Mod(res, p)
-        # }
-        # b = b.Rsh(b, 1)
-        # a.Mul(a, a).Mod(a, p)
-        # }
-
 
 def main():
     x = 0x79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798
