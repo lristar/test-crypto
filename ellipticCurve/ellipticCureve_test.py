@@ -1,8 +1,16 @@
+from cryptos import *
+
+from ellipticCurve.mathUtils.quickMod import *
+
+
 class EllipticCurve:
-    def __init__(self, a, b, p):
+    def __init__(self, a, b, p, n, G_x, G_y):
         self.a = a
         self.b = b
         self.p = p
+        self.n = n
+        self.G_x = G_x
+        self.G_y = G_y
 
     def point(self, x, y):
         return Point(x, y, self.a, self.b, self.p)
@@ -37,30 +45,16 @@ class Point:
 
     def modAll(self, x, y, m):
         if x % y != 0:
-            return x % m * self.quickM(y, m - 2, m)
+            return x % m * quickMod(y, m - 2, m)
         return (x / y) % m
 
-    @staticmethod
-    def quickM(a, b, m):
-        a = a % m
-        ans = 1
-        while b != 0:
-            if b & 1:
-                ans = (ans * a) % m
-            b >>= 1
-            a = (a * a) % m
-        return ans
 
+secp256k1 = EllipticCurve(
+    a=0,
+    b=7,
+    p=0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffefffffc2f,
+    n=0xfffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141,
+    G_x=0x79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798,
+    G_y=0x483ada7726a3c4655da4fbfc0e1108a8fd17b448a68554199c47d08ffb10d4b8
+)
 
-def main():
-    x = 0x79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798
-    y = 0x483ada7726a3c4655da4fbfc0e1108a8fd17b448a68554199c47d08ffb10d4b8
-    p = 2 ** 256 - 2 ** 32 - 977
-    a = EllipticCurve(0, 7, p)
-    p1 = a.point(x, y)
-    p1 = p1 + p1
-    print(a.include(p1))
-
-
-if __name__ == '__main__':
-    main()
