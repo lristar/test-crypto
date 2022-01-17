@@ -7,12 +7,9 @@ from ellipticCurve.curve import *
 
 
 def gen_keypair(curve: EllipticCurve,
-                randfunc: Callable = None) -> Tuple[int, int]:
+                randfunc: Callable = None) -> Tuple[int, Point]:
     randfunc = randfunc or urandom
-    print("first")
     private_key = gen_private_key(curve, randfunc)
-    print("finish priv")
-    print(private_key)
     public_key = get_public_key(private_key, curve)
     return private_key, public_key
 

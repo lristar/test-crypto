@@ -3,7 +3,7 @@ from os import urandom
 from typing import Callable, Tuple
 from dataclasses import dataclass
 
-from curve import EllipticCurve, Point
+from ellipticCurve.curve import EllipticCurve, Point
 
 
 @dataclass
@@ -31,16 +31,19 @@ class ElGamal:
                       randfunc: Callable = None) -> Tuple[Point, Point]:
         randfunc = randfunc or urandom
         # Base point G
-        G = self.curve.G
+        G = self.curve
+        print("g:",G.G_x,"  --",G.G_y)
         M = plaintext
 
         random.seed(randfunc(1024))
-        k = random.randint(1, self.curve.n)
-
-        C1 = k * G
-        C2 = M + k * public_key
+        # k = random.randint(1, self.curve.n)
+        k = 100
+        g = Point(G.G_x,G.G_y,G)
+        C1 = g.multi(k)
+        print("c1:", C1.G_x, "--", C1.G_y)
+        C2 = M + (public_key.multi(k))
         return C1, C2
 
     def decrypt_point(self, private_key: int, C1: Point, C2: Point) -> Point:
-        M = C2 + (self.curve.n - private_key) * C1
+        M = C2 + C1.multi(self.curve.n - private_key)
         return M
