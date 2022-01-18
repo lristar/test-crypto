@@ -1,0 +1,7 @@
+sympy~=1.9
+cryptos~=1.36
+numpy~=1.19.5
+scipy~=1.5.4
+sklearn~=0.0
+scikit-learn~=0.24.2
+dataclasses~=0.8
