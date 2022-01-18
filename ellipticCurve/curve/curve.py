@@ -195,7 +195,8 @@ class Curve(ABC):
                 return Point(x, y, self)
             plaintext += urandom(1)
 
-    def decode_point(self, M: Point) -> bytes:
+    @staticmethod
+    def decode_point(M: Point) -> bytes:
         byte_len = utils.int_length_in_byte(M.x)
         print("byte_len:", byte_len)
         plaintext_len = (M.x >> ((byte_len - 1) * 8)) & 0xff

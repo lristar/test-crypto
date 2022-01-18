@@ -1,6 +1,8 @@
 import unittest
 from ellipticCurve.otherUtils.key import *
 from ellipticCurve.otherUtils.cipher import *
+import numpy as np
+from scipy.interpolate import lagrange
 from ellipticCurve.curve import (
     EllipticCurve
 )
@@ -34,4 +36,10 @@ class ElGamalTestCase(unittest.TestCase):
 
     def test_pub(self):
         print(10 * secp256k1.G)
+
+    def test_lage(self):
+        x = np.array([0, 1, 2])
+        y = x ** 3
+        poly = lagrange(x, y)
+        print(poly)
 

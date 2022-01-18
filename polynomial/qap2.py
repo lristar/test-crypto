@@ -9,7 +9,7 @@ C4*C5=~out
 '''
 
 def main():
-    S = [1, 7, 7, 1, 6, 1, 1]
+    S = [1, 7, 7, 6, 6, 1, 1]
     A = np.array([[0, 0, 0, 0, 0, 0, 1], [0, 0, 0, 0, 1, 0, 1], [0, 0, 0, 1, 0, 0, 0]])
     B = np.array([[0, 0, 0, 0, 0, 1, 0], [1, 0, 0, 0, 0, 0, 0], [0, 0, 1, 0, 0, 0, 0]])
     C = np.array([[0, 0, 0, 1, 0, 0, 0], [0, 0, 1, 0, 0, 0, 0], [0, 1, 0, 0, 0, 0, 0]])
@@ -21,6 +21,7 @@ def main():
     Axs = []
     Bxs = []
     Cxs = []
+    ## lagrange 利用拉格朗日插值法查找多个点生成的多项式
     for i in range(0, 7):
         Axs.append(lagrange(X, A[:, i]))
         Bxs.append(lagrange(X, B[:, i]))
@@ -29,6 +30,9 @@ def main():
     Ax = 0
     Bx = 0
     Cx = 0
+    print("Axs:", Axs)
+    print("Bxs:", Bxs)
+    print("Cxs:", Cxs)
     for i in range(0, 7):
         Ax = Ax + S[i] * Axs[i]
         Bx = Bx + S[i] * Bxs[i]
@@ -50,6 +54,7 @@ def main():
     print("Tx:\n", Tx)
     print("Hx:\n", Hx)
     print("Rx:\n", Rx)
+
 
 if __name__ == '__main__':
     main()
