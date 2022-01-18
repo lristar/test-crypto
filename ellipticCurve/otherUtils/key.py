@@ -2,11 +2,10 @@
 
 from binascii import hexlify
 from typing import Callable, Tuple
-from ellipticCurve.curve import *
+from ellipticCurve.curve.curve import *
 
 
-
-def gen_keypair(curve: EllipticCurve,
+def gen_keypair(curve: Curve,
                 randfunc: Callable = None) -> Tuple[int, Point]:
     randfunc = randfunc or urandom
     private_key = gen_private_key(curve, randfunc)
@@ -14,10 +13,11 @@ def gen_keypair(curve: EllipticCurve,
     return private_key, public_key
 
 
-def gen_private_key(curve: EllipticCurve,
+def gen_private_key(curve: Curve,
                     randfunc: Callable = None) -> int:
     order_bits = 0
     order = curve.n
+    print("order:", order)
 
     while order > 0:
         order >>= 1
@@ -32,10 +32,10 @@ def gen_private_key(curve: EllipticCurve,
     while rand >= curve.n:
         rand = int(hexlify(randfunc(order_bytes)), 16)
         rand >>= extra_bits
-
+    print("rand:",rand)
     return rand
 
 
-def get_public_key(d: int, curve: EllipticCurve):
-    return curve.G().multi(d)
+def get_public_key(d: int, curve: Curve) -> Point:
+    return d * curve.G
 
