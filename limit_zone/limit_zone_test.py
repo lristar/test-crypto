@@ -10,7 +10,6 @@ class FieldElement:
         return 'FieldElement_{}({})'.format(self.prime,self.num)
 
 ## init equal
-
     def __eq__(self, other):
         if other is None:
             return False

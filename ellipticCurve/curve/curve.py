@@ -4,6 +4,7 @@ from dataclasses import dataclass
 from ellipticCurve.mathUtils import quickMod, mod_sqrt, mod_inverse, utils
 from typing import Optional
 
+
 # 装饰器可以帮你生成 __repr__ __init__ 等等方法
 @dataclass
 class Point:
@@ -146,9 +147,6 @@ class Curve(ABC):
         pass
 
     def mul_point(self, d: int, P: Point) -> Point:
-        """
-        https://en.wikipedia.org/wiki/Elliptic_curve_point_multiplication
-        """
         if not self.is_on_curve(P):
             raise ValueError("The point is not on the curve.")
         if P.is_at_infinity():
@@ -199,7 +197,7 @@ class Curve(ABC):
 
     def decode_point(self, M: Point) -> bytes:
         byte_len = utils.int_length_in_byte(M.x)
-        print("byte_len:",byte_len)
+        print("byte_len:", byte_len)
         plaintext_len = (M.x >> ((byte_len - 1) * 8)) & 0xff
         print("plaintext_len:", plaintext_len)
         plaintext = ((M.x >> ((byte_len - plaintext_len - 1) * 8))
