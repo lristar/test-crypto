@@ -34,11 +34,10 @@ class ElGamal:
 
         random.seed(randfunc(1024))
         k = random.randint(1, self.curve.n)
-        k = 100
         C1 = k * G
         C2 = M + k * public_key
         return C1, C2
 
     def decrypt_point(self, private_key: int, C1: Point, C2: Point) -> Point:
-        M = C2 + ((self.curve.n - private_key) *C1)
+        M = C2 + ((self.curve.n - private_key) * C1)
         return M

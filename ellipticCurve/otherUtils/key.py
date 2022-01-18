@@ -32,7 +32,7 @@ def gen_private_key(curve: Curve,
     while rand >= curve.n:
         rand = int(hexlify(randfunc(order_bytes)), 16)
         rand >>= extra_bits
-    print("rand:",rand)
+    print("rand:", rand)
     return rand
 
 

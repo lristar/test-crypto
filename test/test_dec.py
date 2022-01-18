@@ -1,6 +1,6 @@
 import unittest
 from ellipticCurve.otherUtils.key import *
-from ellipticCurve.cipher import *
+from ellipticCurve.otherUtils.cipher import *
 from ellipticCurve.curve import (
     EllipticCurve
 )
@@ -16,12 +16,12 @@ PLAINTEXT = b"I am lzy"
 class ElGamalTestCase(unittest.TestCase):
     def test_secp256k1(self):
         p = secp256k1.G
-        print("px",p.x,"py",p.y)
+        print("px", p.x,"py", p.y)
         p1 = 15 * p
-        print("x:",p1.x,"y:",p1.y)
+        print("x:", p1.x, "y:", p1.y)
         print(secp256k1.is_on_curve(p1))
 
-    def test_createPriv(self):
+    def test_plantext(self):
         pri_key, pub_key = gen_keypair(secp256k1)
         print("priv:", pri_key, "pub_key", pub_key)
         print("is include",secp256k1.is_on_curve(pub_key))
