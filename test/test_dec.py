@@ -7,12 +7,8 @@ from ellipticCurve.curve import (
     EllipticCurve
 )
 
-
-
-
 CURVES = [EllipticCurve, Point]
 PLAINTEXT = b"I am lzy"
-
 
 
 class ElGamalTestCase(unittest.TestCase):
