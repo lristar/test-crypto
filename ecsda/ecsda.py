@@ -1,12 +1,14 @@
+import sys
+
+sys.path.append("..")
 from ellipticCurve.otherUtils.key import *
 from ellipticCurve.curve.EllipticCurve import *
 import random
 from ellipticCurve.mathUtils.quickMod import *
 from hashlib import sha256
 import secrets
-
-
 PLAINTEXT = "I am lzy"
+
 
 def test_getRS():
     pri, pub = gen_keypair(secp256k1)
@@ -24,8 +26,10 @@ def test_getRS():
     print("s:", s)
     return s,z,R,pub,secp256k1.G,p
 
+
 def judge(s,z,R,pub,G):
     return ((z*G)+(R*pub))
+
 
 def getSign():
     pri, pub = gen_keypair(secp256k1)
@@ -37,6 +41,7 @@ def double_hash(message):
     hashed_message = sha256(message.encode('utf-8')).hexdigest()
     hashed_message = sha256(hashed_message.encode('utf-8')).hexdigest()#双重哈希对消息进行加密
     return int(hashed_message, 16)
+
 
 def sign(private_key, message):#私钥对消息签名
     hashed_message = double_hash(message)#消息为上个函数计算的双重哈希的消息
@@ -52,6 +57,7 @@ def sign(private_key, message):#私钥对消息签名
 
     return (rx, signature_proof) #以元组形式存在的签名
 
+
 def verify(public_key, message, signature):
     (rx, s) = signature#为签名的形式
 
@@ -66,8 +72,6 @@ def verify(public_key, message, signature):
 
     # Check that the recovered random point matches the actual random point
     return recovered_random_point.x == rx#相等则表示验证通过
-
-
 
 
 if __name__ == '__main__':

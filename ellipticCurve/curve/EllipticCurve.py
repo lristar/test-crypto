@@ -1,5 +1,5 @@
 from ellipticCurve.curve.curve import *
-from ellipticCurve.mathUtils import utils,mod_sqrt,mod_inverse,quickMod
+from ellipticCurve.mathUtils import mod_sqrt,mod_inverse
 
 
 class EllipticCurve(Curve):
