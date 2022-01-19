@@ -43,7 +43,3 @@ class ElGamalTestCase(unittest.TestCase):
         signs = s.create_Sign(PLAINTEXT,pri_key)
         z = s.get_Message(PLAINTEXT)
         assert vertify(pub_key, z, signs,pub_key)
-
-    def sectool(self):
-        pri_key, pub_key = gen_keypair(easy)
-        pub_key.sec()

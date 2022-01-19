@@ -5,8 +5,6 @@ from ellipticCurve.curve.curve import *
 
 def vertify(point: Point, z, sig: signaTrue,pub):
     inverse_s = quickM(sig.s, point.curve.n - 2, point.curve.n)  # 对s求逆
-    print("verify-inverse_s", inverse_s)
-    print("is inverse", (inverse_s * sig.s) % point.curve.n)
     # Solve for the random point
     a = point.curve.G * (z * (inverse_s % point.curve.n))  # elliptic_multiply()为乘法
     b = pub * (sig.r * (inverse_s % point.curve.n))  # 公钥验证

@@ -77,7 +77,24 @@ class Point:
         return (x / y) % m
 
     def sec(self):
-        sec(self)
+        return b'\x04' + self.x.to_bytes(32, 'big') + self.y.to_bytes(32, 'big')
+
+    def depSec(self, compressed=True):
+        if compressed:
+            if self.y % 2 == 0:
+                return b'\x02' + self.x.to_bytes(32, 'big')
+            else:
+                return b'\x03' + self.x.to_bytes(32, 'big')
+        return b'\x04' + self.x.to_bytes(32, 'big') + self.y.to_bytes(32, 'big')
+
+    def parse(self, sec_bin):
+        if sec_bin[0] == 4:
+            x = int.from_bytes(sec_bin[1:33], 'big')
+            y = int.from_bytes(sec_bin[33:65], 'big')
+            return Point(x,y,self.curve)
+        is_even = sec_bin[0] == 2
+        x = int.from_bytes(sec_bin[1:], 'big')
+        alpha = x ** 3 + self.curve.a*x + self.curve.b
 
 
 

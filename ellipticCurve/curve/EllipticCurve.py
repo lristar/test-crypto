@@ -30,6 +30,12 @@ class EllipticCurve(Curve):
         y = mod_sqrt.modsqrt(right, self.p)
         return y
 
+    def sqrt(self, P: Point):
+        p = (self.p+1)//4
+        v = (P.x**3)+(self.a*P.x)+self.b
+        return v**p
+
+
 
 secp256k1 = EllipticCurve(
     a=0,
