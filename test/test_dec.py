@@ -38,8 +38,12 @@ class ElGamalTestCase(unittest.TestCase):
         assert vk.verify(signature, b"message")
 
     def test_getCreate(self):
-        pri_key, pub_key = gen_keypair(easy)
-        s = sign(easy)
+        pri_key, pub_key = gen_keypair(secp256k1)
+        s = sign(secp256k1)
         signs = s.create_Sign(PLAINTEXT,pri_key)
         z = s.get_Message(PLAINTEXT)
-        assert vertify(pub_key, z, signs)
+        assert vertify(pub_key, z, signs,pub_key)
+
+    def sectool(self):
+        pri_key, pub_key = gen_keypair(easy)
+        pub_key.sec()

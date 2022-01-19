@@ -1,3 +1,4 @@
+from serialize.serialize import *
 from os import urandom
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
@@ -74,6 +75,10 @@ class Point:
         if x % y != 0:
             return x % m * quickMod.quickMod(y, m - 2, m)
         return (x / y) % m
+
+    def sec(self):
+        sec(self)
+
 
 
 @dataclass

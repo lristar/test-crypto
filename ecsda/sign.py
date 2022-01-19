@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from ellipticCurve.curve.curve import *
+from ellipticCurve.mathUtils.quickMod import *
 import secrets
 from hashlib import sha256
 
@@ -16,20 +17,18 @@ class sign:
 
     def create_Sign(self, message, priv):
         z = self.get_Message(message)
-        k = 0  # 产生一个0到P的随机数，其中randbelow()为secrets包的内置函数
+        k = 0
         while k == 0:
-            k = secrets.randbelow(5)
-        r = (self.curve.G * k).x
-        k_inv = quickMod.quickM(k, self.curve.p - 2, self.curve.p)
-        s = (z + r * priv) * k_inv % self.curve.p
-        if s > self.curve.p/2:
-            s = self.curve.p - s
-        return signaTrue(r, s)
+            k = secrets.randbelow(self.curve.n)
+        random_point = self.curve.G * k  # 随机数*基点
+        rx = random_point.x % self.curve.n
+        signature_proof = quickM(k, self.curve.n - 2, self.curve.n) * (z + rx * priv) % self.curve.n
+        return signaTrue(rx, signature_proof)
 
     def GetK(self):
         k = 0  # 产生一个0到P的随机数，其中randbelow()为secrets包的内置函数
         while k == 0:
-            k = secrets.randbelow(5)
+            k = secrets.randbelow(self.curve.n)
         return k
 
     def get_Message(self,message):

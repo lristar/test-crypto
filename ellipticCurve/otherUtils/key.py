@@ -5,6 +5,18 @@ from typing import Callable, Tuple
 from ellipticCurve.curve.curve import *
 
 
+@dataclass
+class Key:
+    priKey: int
+    pubKey: Point
+
+    def __init__(self, priKey, pubKey):
+        self.priKey = priKey
+        self.pubKey = pubKey
+
+    def hex(self):
+        return '{:x}'.format(self.priKey).zfill(64)
+
 def gen_keypair(curve: Curve,
                 randfunc: Callable = None) -> Tuple[int, Point]:
     randfunc = randfunc or urandom
@@ -32,4 +44,3 @@ def gen_private_key(curve: Curve,
 
 def get_public_key(d: int, curve: Curve) -> Point:
     return d * curve.G
-
