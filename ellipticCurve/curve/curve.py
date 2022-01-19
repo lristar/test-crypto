@@ -102,6 +102,9 @@ class Curve(ABC):
     def G(self):
         return Point(self.x, self.y, self)
 
+    def getP(self,x,y):
+        return Point(x, y, self)
+
     @property
     def INF(self) -> Point:
         return Point(None, None, self)

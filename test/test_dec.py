@@ -1,16 +1,15 @@
 import unittest
 from ellipticCurve.otherUtils.key import *
 from ellipticCurve.otherUtils.cipher import *
-import numpy as np
-from scipy.interpolate import lagrange
-from ellipticCurve.mathUtils.mod_inverse import *
+from ecsda.sign import *
+from ecsda.verify import *
 from ecdsa import SigningKey,NIST384p
 from ellipticCurve.curve import (
     EllipticCurve
 )
 
 CURVES = [EllipticCurve, Point]
-PLAINTEXT = b"I am lzy"
+PLAINTEXT = "message"
 
 
 class ElGamalTestCase(unittest.TestCase):
@@ -38,4 +37,9 @@ class ElGamalTestCase(unittest.TestCase):
         signature = sk.sign(b"message")
         assert vk.verify(signature, b"message")
 
-
+    def test_getCreate(self):
+        pri_key, pub_key = gen_keypair(easy)
+        s = sign(easy)
+        signs = s.create_Sign(PLAINTEXT,pri_key)
+        z = s.get_Message(PLAINTEXT)
+        assert vertify(pub_key, z, signs)

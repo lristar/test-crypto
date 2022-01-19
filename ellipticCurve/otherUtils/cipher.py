@@ -2,6 +2,7 @@ import random
 from typing import Callable, Tuple
 from ellipticCurve.curve.EllipticCurve import *
 from dataclasses import dataclass
+from ecsda.verify import *
 
 
 @dataclass
@@ -42,3 +43,4 @@ class ElGamal:
         print("self.curve.n",self.curve.n)
         M = C2 + (-(private_key) * C1)
         return M
+
