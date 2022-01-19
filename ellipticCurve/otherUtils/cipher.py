@@ -39,5 +39,6 @@ class ElGamal:
         return C1, C2
 
     def decrypt_point(self, private_key: int, C1: Point, C2: Point) -> Point:
-        M = C2 + ((self.curve.n - private_key) * C1)
+        print("self.curve.n",self.curve.n)
+        M = C2 + (-(private_key) * C1)
         return M

@@ -3,6 +3,8 @@ from ellipticCurve.otherUtils.key import *
 from ellipticCurve.otherUtils.cipher import *
 import numpy as np
 from scipy.interpolate import lagrange
+from ellipticCurve.mathUtils.mod_inverse import *
+from ecdsa import SigningKey,NIST384p
 from ellipticCurve.curve import (
     EllipticCurve
 )
@@ -24,18 +26,16 @@ class ElGamalTestCase(unittest.TestCase):
         print("priv:", pri_key, "pub_key", pub_key)
         print("is include",secp256k1.is_on_curve(pub_key))
         cipher_elg = ElGamal(secp256k1)
-        print("cipher_elg_x",cipher_elg.curve.x,"cipher_elg_y",cipher_elg.curve.y)
         c1, c2 = cipher_elg.encrypt(PLAINTEXT, pub_key)
         plaintext = cipher_elg.decrypt(pri_key, c1, c2)
         self.assertEqual(plaintext, PLAINTEXT)
         print(plaintext)
 
-    def test_pub(self):
-        print(10 * secp256k1.G)
+    def test_ecdsa(self):
+        sk = SigningKey.generate(curve=NIST384p)
+        vk = sk.verifying_key
+        vk.precompute()
+        signature = sk.sign(b"message")
+        assert vk.verify(signature, b"message")
 
-    def test_lage(self):
-        x = np.array([0, 1, 2])
-        y = x ** 3
-        poly = lagrange(x, y)
-        print(poly)
 

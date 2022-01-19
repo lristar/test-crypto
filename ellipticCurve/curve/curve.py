@@ -192,6 +192,7 @@ class Curve(ABC):
             x = int.from_bytes(plaintext, "big")
             y = self.compute_y(x)
             if y:
+                print("compute_y", y)
                 return Point(x, y, self)
             plaintext += urandom(1)
 
