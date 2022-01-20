@@ -1,34 +1,41 @@
-from ellipticCurve.curve.curve import Point
+from ellipticCurve.curve.curve import *
+from dataclasses import dataclass
+import struct
 
 
-def sec(self):
-    return b'\x04' + self.x.to_bytes(32, 'big') + self.y.to_bytes(32, 'big')
+@dataclass
+class signaTrue:
+    r: int
+    s: int
+
+    def der(self):
+        rbin = self.r.to_bytes(32, byteorder='big')
+        print('start', rbin)
+        # 去掉多余的空的bytes 在开始的时候 避免在后面加0x00时有冲突
+        rbin.lstrip(b'\x00')
+        print('send1', rbin)
+        if rbin[0] & 0x80:
+            rbin = b'\x00' + rbin
+        print('send2', rbin)
+        print("rbin-len",bytes([2, len(rbin)]))
+        result = bytes([2, len(rbin)]) + rbin
+        print("result:", result)
+        sbin = self.s.to_bytes(32, byteorder='big')
+        # 去掉多余的空的bytes 在开始的时候 避免在后面加0x00时有冲突
+        sbin = sbin.lstrip(b'\x00')
+        print("sbin:start", sbin)
+        if sbin[0] & 0x80:
+            sbin = b'\x00' + sbin
+        print("sbin:end", sbin)
+        print("sbin-len", bytes([2, len(sbin)]))
+        result += bytes([2, len(sbin)]) + sbin
+        print("all:", bytes([0x30, len(result)]) + result)
+        return bytes([0x30, len(result)]) + result
+
+# Todo
+    def decParse(self , b :bytes):
+        barray = b[4:36]
+
+        print("result[38:]", b[38:])
 
 
-def depSec(point: Point, compressed=True):
-    if compressed:
-        if point.y % 2 == 0:
-            return b'\x02' + point.x.to_bytes(32, 'big')
-        else:
-            return b'\x03' + point.x.to_bytes(32, 'big')
-    return b'\x04' + point.x.to_bytes(32, 'big') + point.y.to_bytes(32, 'big')
-
-
-def parse(self, sec_bin):
-    if sec_bin[0] == 4:
-        x = int.from_bytes(sec_bin[1:33], 'big')
-        y = int.from_bytes(sec_bin[33:65], 'big')
-        return Point(x, y, self.curve)
-    is_even = sec_bin[0] == 2
-    x = int.from_bytes(sec_bin[1:], 'big')
-    beta = self.curve.sqrt(x)
-    if beta % 2 == 0:
-        even_beta = beta
-        odd_beta = self.curve.p - beta
-    else:
-        even_beta = self.curve.p - beta
-        odd_beta = beta
-    if is_even:
-        return Point(x, even_beta, self.curve)
-    else:
-        return Point(x, odd_beta, self.curve)

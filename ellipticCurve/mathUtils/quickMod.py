@@ -9,5 +9,3 @@ def quickM(a, b, m):
     return ans
 
 
-def Fltheorem(a, p):
-    return (a ** (p - 2)) % p

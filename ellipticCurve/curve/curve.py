@@ -1,8 +1,9 @@
+from serialize.serialize import *
+from ellipticCurve.mathUtils import quickMod, mod_sqrt, mod_inverse, utils
+from typing import Optional
 from os import urandom
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from ellipticCurve.mathUtils import quickMod, mod_sqrt, mod_inverse, utils
-from typing import Optional
 
 
 # 装饰器可以帮你生成 __repr__ __init__ 等等方法
@@ -11,7 +12,6 @@ class Point:
     x: Optional[int]
     y: Optional[int]
     curve: "Curve"
-
     # def __add__(self, other):
     #     if self.x == other.x and (self.x + other.y) % self.curve.p == 0:
     #         return self.__class__(0, 0, self.curve)
@@ -70,19 +70,38 @@ class Point:
     def is_at_infinity(self) -> bool:
         return self.x is None and self.y is None
 
-    def modAll(self, x, y, m):
-        if x % y != 0:
-            return x % m * quickMod.quickMod(y, m - 2, m)
-        return (x / y) % m
-
     def sec(self):
-        sec(self)
+        return b'\x04' + self.x.to_bytes(32, 'big') + self.y.to_bytes(32, 'big')
+
+    def depSec(self, compressed=True):
+        if compressed:
+            if self.y % 2 == 0:
+                return b'\x02' + self.x.to_bytes(32, 'big')
+            else:
+                return b'\x03' + self.x.to_bytes(32, 'big')
+        return b'\x04' + self.x.to_bytes(32, 'big') + self.y.to_bytes(32, 'big')
 
     def parse(self, sec_bin):
-        parse(self, sec_bin)
+        if sec_bin[0] == 4:
+            x = int.from_bytes(sec_bin[1:33], 'big')
+            y = int.from_bytes(sec_bin[33:65], 'big')
+            return Point(x, y, self.curve)
+        is_even = sec_bin[0] == 2
+        x = int.from_bytes(sec_bin[1:], 'big')
+        beta = self.curve.sqrt(x)
+        if beta % 2 == 0:
+            even_beta = beta
+            odd_beta = self.curve.p - beta
+        else:
+            even_beta = self.curve.p - beta
+            odd_beta = beta
+        if is_even:
+            return Point(x, even_beta, self.curve)
+        else:
+            return Point(x, odd_beta, self.curve)
 
-    def depSec(self):
-        depSec(self)
+    def decParse(self, b: bytes):
+        pass
 
 
 @dataclass
