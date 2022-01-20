@@ -6,9 +6,8 @@ from hashlib import sha256
 
 @dataclass
 class signaTrue:
-    def __init__(self, r, s):
-        self.r = r
-        self.s = s
+    r: int
+    s: int
 
 
 @dataclass
