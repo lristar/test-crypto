@@ -1,5 +1,6 @@
 from ellipticCurve.curve.curve import *
 from dataclasses import dataclass
+from typing import Callable, Tuple
 import struct
 
 
@@ -17,6 +18,7 @@ class signaTrue:
         if rbin[0] & 0x80:
             rbin = b'\x00' + rbin
         print('send2', rbin)
+        print('rlen',len(rbin))
         print("rbin-len",bytes([2, len(rbin)]))
         result = bytes([2, len(rbin)]) + rbin
         print("result:", result)
@@ -27,15 +29,17 @@ class signaTrue:
         if sbin[0] & 0x80:
             sbin = b'\x00' + sbin
         print("sbin:end", sbin)
+        print('slen', len(sbin))
         print("sbin-len", bytes([2, len(sbin)]))
         result += bytes([2, len(sbin)]) + sbin
         print("all:", bytes([0x30, len(result)]) + result)
         return bytes([0x30, len(result)]) + result
 
 # Todo
-    def decParse(self , b :bytes):
-        barray = b[4:36]
-
-        print("result[38:]", b[38:])
+    def decParse(self, b: bytes) -> Tuple[int,int]:
+        rlen = b[3]
+        r = b[4:4+rlen]
+        s = b[4 + rlen + 2:]
+        return int.from_bytes(r,'big'), int.from_bytes(s, 'big')
 
 

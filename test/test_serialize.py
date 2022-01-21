@@ -28,9 +28,11 @@ class SerializeTestCase(unittest.TestCase):
     def test_der(self):
         pri_key, pub_key = gen_keypair(secp256k1)
         s = sign(secp256k1)
-        print("pub_key:",pub_key)
         signs = s.create_Sign(PLAINTEXT, pri_key)
         s = signaTrue(signs.r, signs.s)
+        print("s.r",s.r)
+        print("s.s",s.s)
         # Todo   decode der
         result = s.der()
-        s.decParse(result)
+        r1,s1 = s.decParse(result)
+        assert s.r == r1
