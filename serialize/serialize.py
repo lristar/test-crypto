@@ -3,6 +3,7 @@ from dataclasses import dataclass
 from typing import Callable, Tuple
 import struct
 
+BASE58_ALPHABET = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz'
 
 @dataclass
 class signaTrue:
@@ -41,5 +42,29 @@ class signaTrue:
         r = b[4:4+rlen]
         s = b[4 + rlen + 2:]
         return int.from_bytes(r, 'big'), int.from_bytes(s, 'big')
+
+    @staticmethod
+    def encodeBase58(s):
+        count = 0
+        for c in s:
+            if c == 0:
+                count += 1
+            else:
+                break
+        num = int.from_bytes(s, 'big')
+        prefix = '1' * count
+        print("prefix", prefix)
+        result = ''
+        print("s:", s)
+        while num > 0:
+            print("num:", num)
+            num, mod = divmod(num, 58)
+            print("mod:", mod)
+            result = BASE58_ALPHABET[mod] + result
+            print("result:", result)
+        return prefix + result
+
+
+
 
 

@@ -35,3 +35,11 @@ class SerializeTestCase(unittest.TestCase):
         result = s.der()
         r1,s1 = s.decParse(result)
         assert s.r == r1
+
+    def test_base58(self):
+        a = 'c7207fee197d27c618aea621406f6bf5ef6fca38681d82b2f06fddbdce6feab6'
+        pri_key, pub_key = gen_keypair(secp256k1)
+        s = sign(secp256k1)
+        signs = s.create_Sign(PLAINTEXT, pri_key)
+        s = signaTrue(signs.r, signs.s)
+        print(s.encodeBase58(bytes.fromhex(a)))
