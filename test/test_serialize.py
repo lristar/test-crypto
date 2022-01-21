@@ -30,9 +30,8 @@ class SerializeTestCase(unittest.TestCase):
         s = sign(secp256k1)
         signs = s.create_Sign(PLAINTEXT, pri_key)
         s = signaTrue(signs.r, signs.s)
-        print("s.r",s.r)
-        print("s.s",s.s)
-        # Todo   decode der
+        print("s.r", s.r)
+        print("s.s", s.s)
         result = s.der()
         r1,s1 = s.decParse(result)
         assert s.r == r1

@@ -35,11 +35,11 @@ class signaTrue:
         print("all:", bytes([0x30, len(result)]) + result)
         return bytes([0x30, len(result)]) + result
 
-# Todo
-    def decParse(self, b: bytes) -> Tuple[int,int]:
+    @staticmethod
+    def decParse(b: bytes) -> Tuple[int, int]:
         rlen = b[3]
         r = b[4:4+rlen]
         s = b[4 + rlen + 2:]
-        return int.from_bytes(r,'big'), int.from_bytes(s, 'big')
+        return int.from_bytes(r, 'big'), int.from_bytes(s, 'big')
 
 
