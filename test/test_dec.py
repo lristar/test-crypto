@@ -37,7 +37,7 @@ class ElGamalTestCase(unittest.TestCase):
         signature = sk.sign(b"message")
         assert vk.verify(signature, b"message")
 
-    def test_getCreate(self):
+    def test_myecdsa(self):
         pri_key, pub_key = gen_keypair(secp256k1)
         s = sign(secp256k1)
         signs = s.create_Sign(PLAINTEXT,pri_key)
