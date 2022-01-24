@@ -42,13 +42,13 @@ class BobP:
         return c2 == self.c
 
 
-def noActingProcessBetter():
+def noActingProcessBetter() -> bool:
     pri_key, pub_key = gen_keypair(secp256k1)
     al = AliceP(pri_key, PLAINTEXT)
     al.Create_r()
     c, z = al.Create_C_Z(secp256k1.G)
     bob = BobP(pub_key, PLAINTEXT, c=c, z=z)
-    print("verify is ?:", bob.Verify(secp256k1.G))
+    return bob.Verify(secp256k1.G)
 
 
 if __name__ == '__main__':
