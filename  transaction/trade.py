@@ -3,7 +3,6 @@
 # OutPut 输出
 # Locktime 时间锁
 from dataclasses import dataclass
-from script import Script
 from exchange import *
 import hashlib
 

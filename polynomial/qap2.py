@@ -8,6 +8,7 @@ C1*C2=C4
 C4*C5=~out
 '''
 
+
 def main():
     S = [1, 7, 7, 1, 6, 1, 1]
     A = np.array([[0, 0, 0, 0, 0, 0, 1], [0, 0, 0, 0, 1, 0, 1], [0, 0, 0, 1, 0, 0, 0]])
@@ -21,7 +22,7 @@ def main():
     Axs = []
     Bxs = []
     Cxs = []
-    ## lagrange 利用拉格朗日插值法查找多个点生成的多项式
+    # lagrange 利用拉格朗日插值法查找多个点生成的多项式
     for i in range(0, 7):
         Axs.append(lagrange(X, A[:, i]))
         Bxs.append(lagrange(X, B[:, i]))
