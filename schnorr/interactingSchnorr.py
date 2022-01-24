@@ -43,15 +43,25 @@ class BobP:
 
 
 def Process():
+    # create private key and publish key
     pri_key, pub_key = gen_keypair(secp256k1)
+    # init Alice People
     al = AliceP(pri_key)
+    # init Bob People
     bob = BobP(pub_key)
+    # Alice create random r
     al.Create_r()
+    # Alice use random r to create R (R = r*G)
     R = al.Create_R(secp256k1.G)
+    # Alice send R to Bob
     bob.Get_R(R)
+    # Bob create random c
     c = bob.Create_c()
+    # Bob send c to Alice
     al.Get_c(c)
+    # Alice create z through the use of which Bob create the random
     z = al.Create_z()
+    # Bob verify
     return bob.Verify(secp256k1.G, z)
 
 

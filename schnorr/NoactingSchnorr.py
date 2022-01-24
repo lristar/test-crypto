@@ -42,13 +42,21 @@ class BobP:
 
 
 def noActingProcess():
+    # create private key and publish key
     pri_key, pub_key = gen_keypair(secp256k1)
+    # init Alice People
     al = AliceP(pri_key, pub_key)
+    # Alice create random r
     al.Create_r()
+    # Alice create z
     R, z = al.Create_z(secp256k1.G)
+    # init Bob People
     bob = BobP(pub_key)
+    # Alice send R,Z to Bob
     bob.Get_R(R, z)
+    # Bob create c
     bob.Create_c()
+    # Bob verify
     return bob.Verify(secp256k1.G)
 
 
