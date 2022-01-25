@@ -1,10 +1,10 @@
 import unittest
 
-from serialize.key import other_gen_keypair
+from bitcoin.serialize.key import other_gen_keypair
 from ellipticCurve.curve.EllipticCurve import *
 from ellipticCurve.otherUtils.key import *
+from bitcoin.serialize.serialize import *
 from ecsda.sign import sign
-from serialize.serialize import *
 
 PLAINTEXT = "I am lzy"
 

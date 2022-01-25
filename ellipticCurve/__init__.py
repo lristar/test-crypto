@@ -1,2 +1,2 @@
-__all__ = ['utils', 'curve', 'cipher']
+__all__ = ['otherUtils', 'curve', 'mathUtils']
 
