@@ -3,13 +3,13 @@ from ellipticCurve.otherUtils.key import *
 from ellipticCurve.otherUtils.cipher import *
 from ecsda.sign import *
 from ecsda.verify import *
-from ecdsa import SigningKey,NIST384p
 from ellipticCurve.curve import (
     EllipticCurve
 )
 
 CURVES = [EllipticCurve, Point]
 PLAINTEXT = "message"
+PLAINTEXT1 = b'message'
 
 
 class ElGamalTestCase(unittest.TestCase):
@@ -25,21 +25,14 @@ class ElGamalTestCase(unittest.TestCase):
         print("priv:", pri_key, "pub_key", pub_key)
         print("is include",secp256k1.is_on_curve(pub_key))
         cipher_elg = ElGamal(secp256k1)
-        c1, c2 = cipher_elg.encrypt(PLAINTEXT, pub_key)
+        c1, c2 = cipher_elg.encrypt(PLAINTEXT1, pub_key)
         plaintext = cipher_elg.decrypt(pri_key, c1, c2)
-        self.assertEqual(plaintext, PLAINTEXT)
+        self.assertEqual(plaintext, PLAINTEXT1)
         print(plaintext)
-
-    def test_ecdsa(self):
-        sk = SigningKey.generate(curve=NIST384p)
-        vk = sk.verifying_key
-        vk.precompute()
-        signature = sk.sign(b"message")
-        assert vk.verify(signature, b"message")
-
+        
     def test_myecdsa(self):
         pri_key, pub_key = gen_keypair(secp256k1)
         s = sign(secp256k1)
         signs = s.create_Sign(PLAINTEXT,pri_key)
         z = s.get_Message(PLAINTEXT)
-        assert vertify(pub_key, z, signs,pub_key)
+        assert vertify(pub_key, z, signs)

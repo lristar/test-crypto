@@ -25,7 +25,7 @@ class sign:
         return signaTrue(rx, signature_proof)
 
     def GetK(self):
-        k = 0  # 产生一个0到P的随机数，其中randbelow()为secrets包的内置函数
+        k = 0  # 产生一个0到n的随机数，其中randbelow()为secrets包的内置函数
         while k == 0:
             k = secrets.randbelow(self.curve.n)
         return k
