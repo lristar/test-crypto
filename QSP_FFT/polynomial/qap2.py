@@ -17,7 +17,7 @@ def main():
     print("MatrixA:\n", A)
     print("MatrixB:\n", B)
     print("MatrixC:\n", C)
-    X = [1, 2, 3]
+    X = [3, 2, 1]
     print("X:\n", X)
     Axs = []
     Bxs = []
